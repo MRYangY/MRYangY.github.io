@@ -1,28 +1,17 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Posts on Hello Friend NG</title>
+        <title>所有文章 - 大海绵&#39;s Blog!</title>
         <link>https://mryangy.github.io/posts/</link>
-        <description>Recent content in Posts on Hello Friend NG</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Wed, 22 Dec 2021 21:59:23 +0800</lastBuildDate>
-        <atom:link href="https://mryangy.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-        
-        <item>
-            <title>First Post</title>
-            <link>https://mryangy.github.io/posts/2021/12/first-post/</link>
-            <pubDate>Wed, 22 Dec 2021 21:59:23 +0800</pubDate>
-            
-            <guid>https://mryangy.github.io/posts/2021/12/first-post/</guid>
-            <description>dvufbvjdf
+        <description>所有文章 | 大海绵&#39;s Blog!</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Wed, 22 Dec 2021 21:59:23 &#43;0800</lastBuildDate><atom:link href="https://mryangy.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>First Post</title>
+    <link>https://mryangy.github.io/posts/first-post/</link>
+    <pubDate>Wed, 22 Dec 2021 21:59:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mryangy.github.io/posts/first-post/</guid>
+    <description><![CDATA[dvufbvjdf
 vfbvjfbvjfv
-vfjvnfj</description>
-            <content type="html"><![CDATA[<p>dvufbvjdf</p>
-<p>vfbvjfbvjfv</p>
-<p>vfjvnfj</p>
-]]></content>
-        </item>
-        
-    </channel>
+vfjvnfj]]></description>
+</item></channel>
 </rss>
