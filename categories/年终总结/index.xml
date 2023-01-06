@@ -1,22 +1,29 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>年终总结 - 分类 - 大海绵&#39;s Blog!</title>
-        <link>https://www.smallsponge.com/categories/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
+        <link>https://www.bigsponge.top/categories/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
         <description>年终总结 - 分类 - 大海绵&#39;s Blog!</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
-            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Sat, 25 Dec 2021 15:43:28 &#43;0800</lastBuildDate><atom:link href="https://www.smallsponge.com/categories/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Fri, 06 Jan 2023 20:56:52 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/categories/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" rel="self" type="application/rss+xml" /><item>
+    <title>2022年度个人总结</title>
+    <link>https://www.bigsponge.top/posts/2022%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Fri, 06 Jan 2023 20:56:52 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/2022%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[引言 为啥突然又想起来写博客了呢？没错，我又花钱买域名了。。😂😂 之前的域名是：smallsponge.com ，续费价格有点高，要七八十块钱，我]]></description>
+</item><item>
     <title>2021年度个人总结</title>
-    <link>https://www.smallsponge.com/posts/2021%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</link>
+    <link>https://www.bigsponge.top/posts/2021%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</link>
     <pubDate>Sat, 25 Dec 2021 15:43:28 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://www.smallsponge.com/posts/2021%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
+    <guid>https://www.bigsponge.top/posts/2021%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[引言 前两天公司部门老大要求让各项目组写小组的年总总结PPT，我其实是很反感这一套的，感觉上就是个形式主义的东西，没有什么实际意思。 冷静下来想]]></description>
 </item><item>
     <title>2018年度个人总结</title>
-    <link>https://www.smallsponge.com/posts/2018%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</link>
+    <link>https://www.bigsponge.top/posts/2018%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</link>
     <pubDate>Sat, 25 Dec 2021 15:10:01 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://www.smallsponge.com/posts/2018%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
+    <guid>https://www.bigsponge.top/posts/2018%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[这边文章是18年写的，从旧博客迁移过来的文章！ 絮叨 19年的一月份都过去一半了，现在才写18年的年度总结，哈哈，是不是太迟了😄&hellip;]]></description>
 </item></channel>
 </rss>
