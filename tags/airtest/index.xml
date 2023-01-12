@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>AirTest - 标签 - 大海绵&#39;s Blog!</title>
+        <link>https://www.bigsponge.top/tags/airtest/</link>
+        <description>AirTest - 标签 - 大海绵&#39;s Blog!</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Thu, 12 Jan 2023 21:34:23 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/tags/airtest/" rel="self" type="application/rss+xml" /><item>
+    <title>利用AirTest实现自动安装APK-跳过vivo手机安装验证</title>
+    <link>https://www.bigsponge.top/posts/%E5%88%A9%E7%94%A8airtest%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85apk-%E8%B7%B3%E8%BF%87vivo%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85%E9%AA%8C%E8%AF%81/</link>
+    <pubDate>Thu, 12 Jan 2023 21:34:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/%E5%88%A9%E7%94%A8airtest%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85apk-%E8%B7%B3%E8%BF%87vivo%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85%E9%AA%8C%E8%AF%81/</guid>
+    <description><![CDATA[利用AirTest实现自动安装APK-跳过vivo手机安装验证 前言 最近在帮测试组看个问题，他们在自动化测试的时候，通过adb install 命令在vivo]]></description>
+</item></channel>
+</rss>
