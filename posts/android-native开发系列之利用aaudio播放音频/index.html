@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Android Native开发系列之利用AAudio播放音频 - 大海绵&#39;s Blog!</title><meta name="keywords" content="[大海绵 bigsponge rainyang 宇宝守护神]">
+<meta name="Description" content="大海绵的网络日志！"><meta property="og:title" content="Android Native开发系列之利用AAudio播放音频" />
+<meta property="og:description" content="Android-Native开发系列之利用AAudio播放音频 前言 谈到在Android C/C&#43;&#43;层实现音频播放/录制功能的时候，大家可能首先" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" /><meta property="og:image" content="https://www.bigsponge.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-05T20:25:21+08:00" />
+<meta property="article:modified_time" content="2023-02-05T20:25:21+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.bigsponge.top/logo.png"/>
+
+<meta name="twitter:title" content="Android Native开发系列之利用AAudio播放音频"/>
+<meta name="twitter:description" content="Android-Native开发系列之利用AAudio播放音频 前言 谈到在Android C/C&#43;&#43;层实现音频播放/录制功能的时候，大家可能首先"/>
+<meta name="application-name" content="大海绵&#39;s Blog!">
+<meta name="apple-mobile-web-app-title" content="大海绵&#39;s Blog!"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" /><link rel="prev" href="https://www.bigsponge.top/posts/%E5%88%A9%E7%94%A8airtest%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85apk-%E8%B7%B3%E8%BF%87vivo%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85%E9%AA%8C%E8%AF%81/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Android Native开发系列之利用AAudio播放音频",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.bigsponge.top\/posts\/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91\/"
+        },"genre": "posts","keywords": "AAudio, 音频播放","wordcount":  4621 ,
+        "url": "https:\/\/www.bigsponge.top\/posts\/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91\/","datePublished": "2023-02-05T20:25:21+08:00","dateModified": "2023-02-05T20:25:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "大海绵"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138571039-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-138571039-1');
+</script>
+
+<header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大海绵&#39;s Blog!">大海绵&#39;s Blog!</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大海绵&#39;s Blog!">大海绵&#39;s Blog!</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d3c3f44ea63c744b38abb31cdfa8a757";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Android Native开发系列之利用AAudio播放音频</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>大海绵</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/android-native%E5%BC%80%E5%8F%91/"><i class="far fa-folder fa-fw"></i>Android Native开发</a>&nbsp;<a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/"><i class="far fa-folder fa-fw"></i>音视频</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-05">2023-02-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4621 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#android-native开发系列之利用aaudio播放音频">Android-Native开发系列之利用AAudio播放音频</a>
+      <ul>
+        <li><a href="#前言">前言</a></li>
+        <li><a href="#什么是aaudio">什么是AAudio？</a></li>
+        <li><a href="#配置aaudio开发环境">配置AAudio开发环境</a></li>
+        <li><a href="#aaudiostream">AAudioStream</a></li>
+        <li><a href="#extra-info">Extra Info</a></li>
+        <li><a href="#结论">结论</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="android-native开发系列之利用aaudio播放音频">Android-Native开发系列之利用AAudio播放音频</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/MRYangY/blog-img/main/adult-gd5ec3cd3e_1920.jpg"
+        data-srcset="https://raw.githubusercontent.com/MRYangY/blog-img/main/adult-gd5ec3cd3e_1920.jpg, https://raw.githubusercontent.com/MRYangY/blog-img/main/adult-gd5ec3cd3e_1920.jpg 1.5x, https://raw.githubusercontent.com/MRYangY/blog-img/main/adult-gd5ec3cd3e_1920.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/MRYangY/blog-img/main/adult-gd5ec3cd3e_1920.jpg"
+        title="https://raw.githubusercontent.com/MRYangY/blog-img/main/adult-gd5ec3cd3e_1920.jpg" /></p>
+<h3 id="前言">前言</h3>
+<p>谈到在Android C/C++层实现音频播放/录制功能的时候，大家可能首先会想到的是利用opensles去做，这确实是一直不错的实现方式，久经考验，并且适配比较广。</p>
+<p>但如果你的项目最低版本支持Android 26及以上的话，且想追求最小的延迟，最高的性能。那可以考虑一下AAudio。</p>
+<p>博主之前在项目中使用opensles处理音频，后来又分别尝试过利用oboe，aaudio实现音频处理，小有体会，便记录一下，方便自己与他人。</p>
+<h3 id="什么是aaudio">什么是AAudio？</h3>
+<p>AAudio是在Android 8.0时提出的一种新型的C风格接口的Android底层音频库，它的设计目标是追求更高的性能与低延迟。aaudio的设计很单纯，就是播放和录制音频原始数据，拿播放来说的话，就只能播放pcm数据。它不像opensles，opensles可以播放mp3,wav等编码封装后的音频资源。也就是说它不包含编解码模块。</p>
+<p>这里简单提一嘴oboe，oboe是对opensles和aaudio的封装。它内部有自己的一个对设备判断逻辑，来选择内部是用aaudio引擎播放声音还是用opensles引擎播放声音。比如在低于Android 8.0的设备，它会选择用opensles播放。</p>
+<h3 id="配置aaudio开发环境">配置AAudio开发环境</h3>
+<ol>
+<li>
+<p>添加aaudio头文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;aaudio/AAudio.h&gt;</span><span class="cp">
+</span></code></pre></div></li>
+<li>
+<p>CMakeLists.txt 链接<strong>aaudio</strong>库</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cmake" data-lang="cmake"><span class="nb">target_link_libraries</span><span class="p">(</span> <span class="c"># Specifies the target library.
+</span><span class="c"></span>        <span class="s">aaudiodemo</span>
+        <span class="c"># Links the target library to the log library
+</span><span class="c"></span>        <span class="c"># included in the NDK.
+</span><span class="c"></span>        <span class="o">${</span><span class="nv">log-lib</span><span class="o">}</span>
+        <span class="s">android</span>
+        <span class="s">aaudio</span><span class="p">)</span><span class="err">
+</span></code></pre></div></li>
+</ol>
+<h3 id="aaudiostream">AAudioStream</h3>
+<p>AudioStream 在AAudio中是一个很重要的概念，它的结构体是：AAudioStream。与AAudio交换音频数据实现录音和播放效果的实质上是与AAudio中的AAudioStream交换数据。</p>
+<p>我们在使用AAudio播放音频的时候，首先要做的就是创建AAudioStream。</p>
+<h4 id="1创建aaudiostreambuilder">1.创建AAudioStreamBuilder</h4>
+<p>AAudioStream的创建设计成了builder模式，所以我们需要先创建一个相应的builder对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">AAudioStreamBuilder</span> <span class="o">*</span><span class="n">builder</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="n">aaudio_result_t</span> <span class="n">result</span> <span class="o">=</span> <span class="n">AAudio_createStreamBuilder</span><span class="p">(</span><span class="o">&amp;</span><span class="n">builder</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="n">AAUDIO_OK</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">LOGE</span><span class="p">(</span><span class="s">&#34;AAudioEngine::createStreamBuilder Fail: %s&#34;</span><span class="p">,</span> <span class="n">AAudio_convertResultToText</span><span class="p">(</span><span class="n">result</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div><h4 id="2配置aaudiostream">2.配置AAudioStream</h4>
+<p>通过builder的setXXX函数来配置AAudioStream。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">AAudioStreamBuilder_setDeviceId</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">AAUDIO_UNSPECIFIED</span><span class="p">);</span>
+<span class="n">AAudioStreamBuilder_setFormat</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">mFormat</span><span class="p">);</span>
+<span class="n">AAudioStreamBuilder_setChannelCount</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">mChannel</span><span class="p">);</span>
+<span class="n">AAudioStreamBuilder_setSampleRate</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">mSampleRate</span><span class="p">);</span>
+
+<span class="c1">// We request EXCLUSIVE mode since this will give us the lowest possible latency.
+</span><span class="c1">// If EXCLUSIVE mode isn&#39;t available the builder will fall back to SHARED mode.
+</span><span class="c1"></span><span class="n">AAudioStreamBuilder_setSharingMode</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">AAUDIO_SHARING_MODE_EXCLUSIVE</span><span class="p">);</span>
+<span class="n">AAudioStreamBuilder_setPerformanceMode</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">AAUDIO_PERFORMANCE_MODE_LOW_LATENCY</span><span class="p">);</span>
+<span class="n">AAudioStreamBuilder_setDirection</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">AAUDIO_DIRECTION_OUTPUT</span><span class="p">);</span>
+<span class="c1">// AAudioStreamBuilder_setDataCallback(builder, aaudiodemo::dataCallback, this);
+</span><span class="c1">// AAudioStreamBuilder_setErrorCallback(builder, aaudiodemo::errorCallback, this);
+</span></code></pre></div><p>简述一下上面的函数，具体大家可以看源码里面的注释。</p>
+<ul>
+<li>DeviceId&mdash;-指定物理音频设备，例如内建扬声器，麦克风，有线耳机等等。这里AAUDIO_UNSPECIFIED表示有AAudio根据上下文自行决定，如果是播放音频的话，一般它会选择扬声器。</li>
+<li>format，channel，sample就不细说了，很容易理解，这里提一嘴的是，测试下来发现AAudio只支持单声道和双声道音频，5.1、7.1这种多声道音频，不支持播放。opensles也是，虽然提供了多声道的枚举值，但是当真正设置进去的时候，会提示说不支持。</li>
+<li>SharingMode 分为：<strong>AAUDIO_SHARING_MODE_EXCLUSIVE</strong> 和 <strong>AAUDIO_SHARING_MODE_SHARED</strong> ，因为AAudioStream是要和device绑定的，独占模式就是独占这个audio device，别的audio stream不能访问，独占模式下延迟会更小，但是要注意不用的时候及时关闭释放，不然别的流没法访问该audio device了。共享模式就是多个音频流可以共享一个audio device，官方说共享模式下，同一个audio device所有音频流可以实现混音，这个混音我还没试，后面抽空试试。到时候会在文末补充结论。</li>
+<li>PerformanceMode：
+<ul>
+<li><strong>AAUDIO_PERFORMANCE_MODE_NONE</strong>  默认模式，在延迟和省电间，自己平衡</li>
+<li><strong>AAUDIO_PERFORMANCE_MODE_LOW_LATENCY</strong> 更注重延迟</li>
+<li><strong>AAUDIO_PERFORMANCE_MODE_POWER_SAVING</strong> 更注重省电</li>
+</ul>
+</li>
+<li>Direction
+<ul>
+<li><strong>AAUDIO_DIRECTION_INPUT</strong>  录音的时候用</li>
+<li><strong>AAUDIO_DIRECTION_OUTPUT</strong>  播放的时候用</li>
+</ul>
+</li>
+</ul>
+<p>最后两行被注释的回调，我们后面再说。</p>
+<h4 id="3创建aaudiostream">3.创建AAudioStream</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">aaudio_result_t</span>  <span class="n">AAudioStreamBuilder_openStream</span><span class="p">(</span><span class="n">AAudioStreamBuilder</span><span class="o">*</span> <span class="n">builder</span><span class="p">,</span>
+        <span class="n">AAudioStream</span><span class="o">**</span> <span class="n">stream</span><span class="p">)</span>
+</code></pre></div><p>通过openStream函数，获取到指定配置的AAudioStream对象，接着就可以拿着audio stream处理音频数据了。这里在成功创建玩AAudioStream之后，可以通过调用AAudioStream的相关getXXX函数，获取“<em><strong>真正</strong></em>” audio stream配置，之前通过audio stream builder设置的配置是我们的意向配置，一般来说，意向配置就是最终配置，但是也会存在偏差，所以在调式阶段，最好再打印一下，真正的audio stream配置，帮助开发者获取确切信息。</p>
+<table>
+<thead>
+<tr>
+<th><a href="https://developer.android.com/ndk/reference/group___audio#gaab12dd029554b2928cac6bb057903525" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setDeviceId()</code></a></th>
+<th><a href="https://developer.android.com/ndk/reference/group___audio#ga1914721c39f9400c6a7e32b11908b066" target="_blank" rel="noopener noreffer"><code>AAudioStream_getDeviceId()</code></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga22a61c42068a5733d0d4c7b4114c3333" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setDirection()</code></a></td>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga8845709a1ea64e18eed9255c15a8402b" target="_blank" rel="noopener noreffer"><code>AAudioStream_getDirection()</code></a></td>
+</tr>
+<tr>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#gaa5edd7941e1dc11cc7dbf5b35dd54841" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setSharingMode()</code></a></td>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga51b7db27bdd331c22d8443a50033a17a" target="_blank" rel="noopener noreffer"><code>AAudioStream_getSharingMode()</code></a></td>
+</tr>
+<tr>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga8b7930b6b7251e6a73c601030c7ce2b2" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setSampleRate()</code></a></td>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga2f3f5739425578c6c8e61c02f53528ce" target="_blank" rel="noopener noreffer"><code>AAudioStream_getSampleRate()</code></a></td>
+</tr>
+<tr>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga8d7461d982bbff630dea6546ec7e9844" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setChannelCount()</code></a></td>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#gac04633015b26345d2f2fa97d32e0d643" target="_blank" rel="noopener noreffer"><code>AAudioStream_getChannelCount()</code></a></td>
+</tr>
+<tr>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#gacdf4cd79e60923c300bc81e7ab032713" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setFormat()</code></a></td>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga90831503bace94aa6a650baba29aec36" target="_blank" rel="noopener noreffer"><code>AAudioStream_getFormat()</code></a></td>
+</tr>
+<tr>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga4dbce24e8b60b733ddbe2a76052e66f0" target="_blank" rel="noopener noreffer"><code>AAudioStreamBuilder_setBufferCapacityInFrames()</code></a></td>
+<td><a href="https://developer.android.com/ndk/reference/group___audio#ga887c8e56710452305f229907be60a046" target="_blank" rel="noopener noreffer"><code>AAudioStream_getBufferCapacityInFrames()</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>在创建完成AAudioStream后，需要释放AAudioStreamBuilder对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">AAudioStreamBuilder_delete</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+</code></pre></div><h4 id="4操作aaudiostream">4.操作AAudioStream</h4>
+<ul>
+<li>AAudioStream 的生命周期
+<ul>
+<li>Open</li>
+<li>Started</li>
+<li>Paused</li>
+<li>Flushed</li>
+<li>Stopped</li>
+<li>Disconnected</li>
+<li>Error</li>
+</ul>
+</li>
+</ul>
+<p>我们先说前五种状态，它们的状态变化可以用下面的流程图表示，虚线框表示瞬时状态，实线框表示稳定状态：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/MRYangY/blog-img/main/aaudio-lifecycle.png"
+        data-srcset="https://raw.githubusercontent.com/MRYangY/blog-img/main/aaudio-lifecycle.png, https://raw.githubusercontent.com/MRYangY/blog-img/main/aaudio-lifecycle.png 1.5x, https://raw.githubusercontent.com/MRYangY/blog-img/main/aaudio-lifecycle.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/MRYangY/blog-img/main/aaudio-lifecycle.png"
+        title="https://raw.githubusercontent.com/MRYangY/blog-img/main/aaudio-lifecycle.png" /></p>
+<p>其中涉及的函数有：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">aaudio_result_t</span> <span class="n">result</span><span class="p">;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">AAudioStream_requestStart</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">AAudioStream_requestStop</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">AAudioStream_requestPause</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">AAudioStream_requestFlush</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+</code></pre></div><p>上面的这些函数是异步调用，不会阻塞。也就是，调用完函数后，audio stream的状态不会立马转移到指定状态。它会先转移到相应的瞬时状态，看上面的流程图就能知道，相应的瞬时状态有如下几种：</p>
+<ul>
+<li>Starting</li>
+<li>Pausing</li>
+<li>Flushing</li>
+<li>Stopping</li>
+<li>Closing</li>
+</ul>
+<p>那调用完requestXXX函数后，怎么知道状态真正切换到相应的状态呢？一般来说，我们没必要知道这个信息，所以AAudio对于这方面支持一般，都没提供什么接口。如果你有这方面的需求的话，那么可以看看，下面的函数，可以勉强符合你的需求。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">aaudio_result_t</span> <span class="n">AAudioStream_waitForStateChange</span><span class="p">(</span><span class="n">AAudioStream</span><span class="o">*</span> <span class="n">stream</span><span class="p">,</span>
+        <span class="n">aaudio_stream_state_t</span> <span class="n">inputState</span><span class="p">,</span> <span class="n">aaudio_stream_state_t</span> <span class="o">*</span><span class="n">nextState</span><span class="p">,</span>
+        <span class="kt">int64_t</span> <span class="n">timeoutNanoseconds</span><span class="p">)</span>
+</code></pre></div><p>这个函数需要注意的是<strong>inputState</strong> 和 <strong>nextState</strong>参数，inputState参数代表当前的状态，可以通过<strong>AAudioStream_getState</strong>获取，<strong>nextState是指状态发生变化后，新的状态值，这里新的状态值是不确定的，但有一点确定的是，一定跟inputState值不一样</strong>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">aaudio_stream_state_t</span> <span class="n">inputState</span> <span class="o">=</span> <span class="n">AAUDIO_STREAM_STATE_PAUSING</span><span class="p">;</span>
+<span class="n">aaudio_stream_state_t</span> <span class="n">nextState</span> <span class="o">=</span> <span class="n">AAUDIO_STREAM_STATE_UNINITIALIZED</span><span class="p">;</span>
+<span class="kt">int64_t</span> <span class="n">timeoutNanos</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">AAUDIO_NANOS_PER_MILLISECOND</span><span class="p">;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">AAudioStream_requestPause</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">AAudioStream_waitForStateChange</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">inputState</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nextState</span><span class="p">,</span> <span class="n">timeoutNanos</span><span class="p">);</span>
+</code></pre></div><p>例如上面的代码，waitForStateChange函数调用后，nextState就一定是Paused吗？不一定，有可能是其他的状态，比如：Disconnected，但是nextState一定不等于inputState。</p>
+<p><strong>注意</strong></p>
+<ul>
+<li>不要在调用AAudioStream_close之后，调用waitForStateChange函数</li>
+<li>当其他线程运行waitForStateChange函数时，不要调用AAudioStream_close函数</li>
+</ul>
+<h4 id="5aaudiostream处理音频数据">5.AAudioStream处理音频数据</h4>
+<p>当audio stream启动后，有两种方式来处理音频数据。</p>
+<ul>
+<li>通过<em><strong>AAudioStream_write</strong></em>和<em><strong>AAudioStream_read</strong></em>函数向流里写数据和读数据，使用此方式需要自己创建线程控制数据读写。</li>
+<li>通过callback的方式，使用此方式，会更高效，延迟更低，是官方推荐的方式</li>
+</ul>
+<h5 id="通过writeread函数直接读写数据">通过write、read函数直接读写数据</h5>
+<p>先看下函数原型：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">aaudio_result_t</span> <span class="n">AAudioStream_write</span><span class="p">(</span><span class="n">AAudioStream</span><span class="o">*</span> <span class="n">stream</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span>
+                               <span class="kt">int32_t</span> <span class="n">numFrames</span><span class="p">,</span>
+                               <span class="kt">int64_t</span> <span class="n">timeoutNanoseconds</span><span class="p">)</span>
+</code></pre></div><p>buffer: 音频原始数据</p>
+<p>numFrames：请求处理的帧数，例如：16位双声道的数据，那么该值就是：bufferSize/(16/8)/2</p>
+<p>timeoutNanoseconds: 最长阻塞时间，当值为0时，表示不阻塞</p>
+<p>return value: 表示实际处理的帧数</p>
+<p>知道函数的使用方式后，我们就可以在愉快的往里面填充数据了~</p>
+<h5 id="通过callback回调的方式处理数据">通过callback回调的方式处理数据</h5>
+<p>为什么官方说推荐使用callback方式呢，主要原因我认为有几点：</p>
+<ol>
+<li>使用callback方式，aaudio内部会通过一个高优先级的优化后的专属线程处理回调，会避免因线程抢占等问题出现杂音。</li>
+<li>使用callback方式，延迟更低。</li>
+<li>使用直接向流里读写数据，需要自己维护一个播放线程，成本高，且有bug风险。而且如果要创建多个音频播放器，考虑出现多个线程，进而出现资源紧张的问题。</li>
+</ol>
+<p>那这么说，是不是就一定得用callback方式了呢，也不是，经过作者的测试发现，关于延迟的指标，除非对延迟要求很高的产品，大多数情况下，使用直接读写数据到流的方式也是没问题的。所以选择具体方案还是要根据项目的真实情况决定。</p>
+<p>具体怎么通过callback的方式处理数据呢？</p>
+<p>还记得在<strong>配置AAudioStream</strong>这一节的时候，被注释的两行代码嘛。</p>
+<p><code>// AAudioStreamBuilder_setDataCallback(builder, aaudiodemo::dataCallback, this);</code>
+<code>// AAudioStreamBuilder_setErrorCallback(builder, aaudiodemo::errorCallback, this);</code></p>
+<p>当使用callback模式处理音频数据的时候，就需要设置这两个函数。</p>
+<hr>
+<p><strong>dataCallback</strong> 在AAudio需要数据时触发，我们只需要往里面写入指定大小的数据即可。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="nf">aaudio_data_callback_result_t</span> <span class="p">(</span><span class="o">*</span><span class="n">AAudioStream_dataCallback</span><span class="p">)(</span>
+        <span class="n">AAudioStream</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span>
+  			<span class="c1">///上下文环境
+</span><span class="c1"></span>        <span class="kt">void</span> <span class="o">*</span><span class="n">userData</span><span class="p">,</span>
+  			<span class="c1">///填充音频数据
+</span><span class="c1"></span>        <span class="kt">void</span> <span class="o">*</span><span class="n">audioData</span><span class="p">,</span>
+  			<span class="c1">///需要填充多少帧数据，具体的换算方式：dataSize = numFrames*channels*(format == AAUDIO_FORMAT_PCM_I16 ? 2 : 1)
+</span><span class="c1"></span>        <span class="kt">int32_t</span> <span class="n">numFrames</span><span class="p">);</span>
+</code></pre></div><p>该回调的返回值有两种：</p>
+<ul>
+<li>AAUDIO_CALLBACK_RESULT_CONTINUE  表示继续播放</li>
+<li>AAUDIO_CALLBACK_RESULT_STOP  表示停止播放，该回调不会再触发</li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>因为dataCallback会频繁调用。所以最好不要在此回调中做一下耗时的，很重的任务。</p>
+<p><strong>errorCallback</strong> 当出现错误发生的时候或者断开连接的时候，此回调会被触发。常见的一个例子是：如果audio device disconnected时，会触发errorCallback，这个时候需要新开一个线程，重新创建AAudioStream。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">AAudioStream_errorCallback</span><span class="p">)(</span>
+        <span class="n">AAudioStream</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span>
+        <span class="kt">void</span> <span class="o">*</span><span class="n">userData</span><span class="p">,</span>
+        <span class="n">aaudio_result_t</span> <span class="n">error</span><span class="p">);</span>
+</code></pre></div><p><strong>注意：</strong></p>
+<p>在此回调中，下列函数不要直接调用，需要新开一个线程处理</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">AAudioStream_requestStop</span><span class="p">()</span>
+<span class="n">AAudioStream_requestPause</span><span class="p">()</span>
+<span class="n">AAudioStream_close</span><span class="p">()</span>
+<span class="n">AAudioStream_waitForStateChange</span><span class="p">()</span>
+<span class="n">AAudioStream_read</span><span class="p">()</span>
+<span class="n">AAudioStream_write</span><span class="p">()</span>
+</code></pre></div><p>AAudioStream相关的getXXX函数可以直接调用，如：AAudioStream_get*()**</p>
+<p>关于AAudio的使用demo，已上传至github，觉得不错的话，就给个star吧~ღ( ´･ᴗ･` )比心</p>
+<h4 id="6销毁aaudiostream">6.销毁AAudioStream</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">AAudioStream_close</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+</code></pre></div><h3 id="extra-info">Extra Info</h3>
+<p>上面的章节属于必须内容，下面的为补充内容，按需了解。</p>
+<h4 id="underrun--overrun">underrun &amp; overrun</h4>
+<p>underrun和overrun是音频数据的生产与消费节奏不匹配导致的。</p>
+<p>underrun 是指在播放音频的时候，没有及时往audio stream写入的数据，系统没有可用的音频数据。</p>
+<p>overrun 是指在录制音频的时候，没有及时的从audio stream读取数据，导致音频没人接收，就给丢了。</p>
+<p>这两种情况都会导致音频出现问题。</p>
+<p>AAudio是怎么解决这种问题呢？</p>
+<p>利用动态调整缓冲区大小来降低延迟，避免underrun。涉及到的函数有：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">///app一次处理音频的数据量-(帧数)，返回的值是经过系统优化后的适应低延迟的值，可作为出现XRun时的StepSize
+</span><span class="c1"></span><span class="kt">int32_t</span> <span class="nf">AAudioStream_getFramesPerBurst</span><span class="p">(</span><span class="n">AAudioStream</span><span class="o">*</span> <span class="n">stream</span><span class="p">);</span>
+<span class="c1">///缓冲区大小设置，实现低延迟的，解决xrun的本质就是动态的调节这个size的大小
+</span><span class="c1"></span><span class="n">aaudio_result_t</span> <span class="nf">AAudioStream_setBufferSizeInFrames</span><span class="p">(</span><span class="n">AAudioStream</span><span class="o">*</span> <span class="n">stream</span><span class="p">,</span><span class="kt">int32_t</span> <span class="n">numFrames</span><span class="p">);</span>
+<span class="kt">int32_t</span> <span class="n">AAudioStream_getBufferSizeInFrames</span><span class="p">(</span><span class="n">AAudioStream</span><span class="o">*</span> <span class="n">stream</span><span class="p">)</span>
+<span class="c1">///通过该方法，可以知道是否发生underrun或者overrun，进而决定该如何调整缓冲区大小
+</span><span class="c1"></span><span class="kt">int32_t</span> <span class="n">AAudioStream_getXRunCount</span><span class="p">(</span><span class="n">AAudioStream</span><span class="o">*</span> <span class="n">stream</span><span class="p">)</span>
+</code></pre></div><p>演示调用流程：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int32_t</span> <span class="n">previousUnderrunCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int32_t</span> <span class="n">framesPerBurst</span> <span class="o">=</span> <span class="n">AAudioStream_getFramesPerBurst</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="c1">///通常在最开始的时候把framesPerBurst的值通过AAudioStream_setBufferSize设置给bufferSize，让它两一样会更容易达到低延迟
+</span><span class="c1"></span><span class="kt">int32_t</span> <span class="n">bufferSize</span> <span class="o">=</span> <span class="n">AAudioStream_getBufferSizeInFrames</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="kt">int32_t</span> <span class="n">bufferCapacity</span> <span class="o">=</span> <span class="n">AAudioStream_getBufferCapacityInFrames</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="n">run</span><span class="p">)</span> <span class="p">{</span>
+  	<span class="c1">/// 向AAudioStream写数据
+</span><span class="c1"></span>    <span class="n">result</span> <span class="o">=</span> <span class="n">writeSomeData</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+
+    <span class="c1">// Are we getting underruns?
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">bufferSize</span> <span class="o">&lt;</span> <span class="n">bufferCapacity</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int32_t</span> <span class="n">underrunCount</span> <span class="o">=</span> <span class="n">AAudioStream_getXRunCount</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">underrunCount</span> <span class="o">&gt;</span> <span class="n">previousUnderrunCount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">previousUnderrunCount</span> <span class="o">=</span> <span class="n">underrunCount</span><span class="p">;</span>
+            <span class="c1">// Try increasing the buffer size by one burst
+</span><span class="c1"></span>            <span class="n">bufferSize</span> <span class="o">+=</span> <span class="n">framesPerBurst</span><span class="p">;</span>
+            <span class="n">bufferSize</span> <span class="o">=</span> <span class="n">AAudioStream_setBufferSize</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">bufferSize</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>上面的代码很容易理解，就是刚开始会初始化一块小的buffer, 当发生underrun的时候，根据framesPerBurst不断的增大buffer，来实现低延迟。</p>
+<h4 id="thread-safety">Thread safety</h4>
+<p>AAudio的接口不是完全线程安全的。在使用的时候需要注意：</p>
+<ul>
+<li>不要在多个线程并发调用AAudioStream_waitForStateChange()/read/write函数。</li>
+<li>不要在一个线程关闭流，另一个线程读写流。</li>
+</ul>
+<p>线程安全的有：</p>
+<ul>
+<li><code>AAudio_convert*ToText()</code></li>
+<li><code>AAudio_createStreamBuilder()</code></li>
+<li><code>AAudioStream_get*()</code> 系列函数，除了 <code>AAudioStream_getTimestamp()</code></li>
+</ul>
+<h3 id="结论">结论</h3>
+<p>aaudio接口很简单，跟opensles的代码量相比，少多了。不过功能比opensles少一些。像是解码，控制音量等，aaudio都木有。大家看自己需求选择吧。</p>
+<p>给个demo工程链接，配合着文章看看就懂了。</p>
+<p><a href="https://github.com/MRYangY/AAudioDemo" target="_blank" rel="noopener noreffer">https://github.com/MRYangY/AAudioDemo</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-02-05</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" data-title="Android Native开发系列之利用AAudio播放音频" data-hashtags="AAudio,音频播放"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" data-title="Android Native开发系列之利用AAudio播放音频"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/"><i class="fab fa-reddit fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" data-title="Android Native开发系列之利用AAudio播放音频"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" data-title="Android Native开发系列之利用AAudio播放音频"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://www.bigsponge.top/posts/android-native%E5%BC%80%E5%8F%91%E7%B3%BB%E5%88%97%E4%B9%8B%E5%88%A9%E7%94%A8aaudio%E6%92%AD%E6%94%BE%E9%9F%B3%E9%A2%91/" data-title="Android Native开发系列之利用AAudio播放音频"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/aaudio/">AAudio</a>,&nbsp;<a href="/tags/%E9%9F%B3%E9%A2%91%E6%92%AD%E6%94%BE/">音频播放</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%88%A9%E7%94%A8airtest%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85apk-%E8%B7%B3%E8%BF%87vivo%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85%E9%AA%8C%E8%AF%81/" class="prev" rel="prev" title="利用AirTest实现自动安装APK-跳过vivo手机安装验证"><i class="fas fa-angle-left fa-fw"></i>利用AirTest实现自动安装APK-跳过vivo手机安装验证</a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">大海绵</a></span></div>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次</span>
+            <span id="busuanzi_container_site_uv">本站访客数:<span id="busuanzi_value_site_uv"></span>人次</span>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"MRYangY/MRYangY.github.io"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-138571039-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-138571039-1" async></script></body>
+</html>
