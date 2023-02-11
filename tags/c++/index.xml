@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>C&#43;&#43; - 标签 - 大海绵&#39;s Blog!</title>
+        <link>https://www.bigsponge.top/tags/c&#43;&#43;/</link>
+        <description>C&#43;&#43; - 标签 - 大海绵&#39;s Blog!</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Sat, 11 Feb 2023 17:31:07 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/tags/c&#43;&#43;/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;笔记之单例模式</title>
+    <link>https://www.bigsponge.top/posts/c&#43;&#43;%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+    <pubDate>Sat, 11 Feb 2023 17:31:07 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/c&#43;&#43;%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+    <description><![CDATA[C++笔记之单例模式 前言 当一个类在程序的整个生命周期中，只需要一个实例的时候，就可以考虑把这个类设计成单例的方式，提供出去，让全局访问。一般]]></description>
+</item></channel>
+</rss>
