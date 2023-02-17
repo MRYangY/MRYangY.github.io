@@ -4,9 +4,16 @@
         <link>https://www.bigsponge.top/</link>
         <description>大海绵的网络日志！</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
-            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Sat, 11 Feb 2023 17:31:07 &#43;0800</lastBuildDate>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Fri, 17 Feb 2023 21:55:48 &#43;0800</lastBuildDate>
             <atom:link href="https://www.bigsponge.top/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>深圳之行</title>
+    <link>https://www.bigsponge.top/posts/%E6%B7%B1%E5%9C%B3%E4%B9%8B%E8%A1%8C/</link>
+    <pubDate>Fri, 17 Feb 2023 21:55:48 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/%E6%B7%B1%E5%9C%B3%E4%B9%8B%E8%A1%8C/</guid>
+    <description><![CDATA[前几天因为工作原因，需要出差去了一趟深圳，当时挺抗拒的，因为不想离开家，住在外面。但是工作嘛，没办法。后来一想，也没去过深圳，可以顺便玩一下]]></description>
+</item><item>
     <title>C&#43;&#43;笔记之单例模式</title>
     <link>https://www.bigsponge.top/posts/c&#43;&#43;%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
     <pubDate>Sat, 11 Feb 2023 17:31:07 &#43;0800</pubDate>
