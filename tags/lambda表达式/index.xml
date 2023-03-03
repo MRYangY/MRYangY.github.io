@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>lambda表达式 - 标签 - 大海绵&#39;s Blog!</title>
+        <link>https://www.bigsponge.top/tags/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+        <description>lambda表达式 - 标签 - 大海绵&#39;s Blog!</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Fri, 03 Mar 2023 21:39:07 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/tags/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43;笔记之Lambda表达式</title>
+    <link>https://www.bigsponge.top/posts/c&#43;&#43;%E7%AC%94%E8%AE%B0%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+    <pubDate>Fri, 03 Mar 2023 21:39:07 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/c&#43;&#43;%E7%AC%94%E8%AE%B0%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+    <description><![CDATA[引言 Lambda表达式是从C++ 11版本引入的特性，利用它可以很方便的定义匿名函数对象，通常作为回调函数来使用。大家会经常拿它和函数指针，函]]></description>
+</item></channel>
+</rss>
