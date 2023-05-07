@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>音视频 - 标签 - 大海绵&#39;s Blog!</title>
+        <link>https://www.bigsponge.top/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/</link>
+        <description>音视频 - 标签 - 大海绵&#39;s Blog!</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Sun, 07 May 2023 15:44:58 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/" rel="self" type="application/rss+xml" /><item>
+    <title>Android播放透明视频</title>
+    <link>https://www.bigsponge.top/posts/android%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</link>
+    <pubDate>Sun, 07 May 2023 15:44:58 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/android%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</guid>
+    <description><![CDATA[思路 设计一种特殊的视频，它的一半内容存储alpha信息，另一半内容存储rgb信息，接着通过OpenGL获取每个像素点的alpha值和rgb值]]></description>
+</item></channel>
+</rss>

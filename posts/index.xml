@@ -4,7 +4,14 @@
         <link>https://www.bigsponge.top/posts/</link>
         <description>所有文章 | 大海绵&#39;s Blog!</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>mryangy423@gmail.com (大海绵)</managingEditor>
-            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Fri, 03 Mar 2023 21:39:07 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>mryangy423@gmail.com (大海绵)</webMaster><lastBuildDate>Sun, 07 May 2023 15:44:58 &#43;0800</lastBuildDate><atom:link href="https://www.bigsponge.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Android播放透明视频</title>
+    <link>https://www.bigsponge.top/posts/android%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</link>
+    <pubDate>Sun, 07 May 2023 15:44:58 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://www.bigsponge.top/posts/android%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</guid>
+    <description><![CDATA[思路 设计一种特殊的视频，它的一半内容存储alpha信息，另一半内容存储rgb信息，接着通过OpenGL获取每个像素点的alpha值和rgb值]]></description>
+</item><item>
     <title>C&#43;&#43;笔记之Lambda表达式</title>
     <link>https://www.bigsponge.top/posts/c&#43;&#43;%E7%AC%94%E8%AE%B0%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
     <pubDate>Fri, 03 Mar 2023 21:39:07 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://www.bigsponge.top/posts/2018%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[这边文章是18年写的，从旧博客迁移过来的文章！ 絮叨 19年的一月份都过去一半了，现在才写18年的年度总结，哈哈，是不是太迟了😄&hellip;]]></description>
-</item><item>
-    <title>降息降准到底是怎么一回事？</title>
-    <link>https://www.bigsponge.top/posts/%E9%99%8D%E6%81%AF%E9%99%8D%E5%87%86%E5%88%B0%E5%BA%95%E6%98%AF%E6%80%8E%E4%B9%88%E4%B8%80%E5%9B%9E%E4%BA%8B/</link>
-    <pubDate>Fri, 24 Dec 2021 17:01:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.bigsponge.top/posts/%E9%99%8D%E6%81%AF%E9%99%8D%E5%87%86%E5%88%B0%E5%BA%95%E6%98%AF%E6%80%8E%E4%B9%88%E4%B8%80%E5%9B%9E%E4%BA%8B/</guid>
-    <description><![CDATA[前言 我们在看一些财经类新闻的时候，经常会听到新闻报道说&quot;降息&quot;，&quot;降准&ldquo;时，市场上都比较欢腾，行情]]></description>
 </item></channel>
 </rss>
